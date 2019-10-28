@@ -4,11 +4,11 @@ import Register from './components/Register/Register'
 import Signin from './components/Signin/Signin'
 import './App.css';
 
-const loadUser = () => {
+loadUser = () => {
 
 }
 
-const onRouteChange = () => {
+onRouteChange = () => {
 
 }
 
