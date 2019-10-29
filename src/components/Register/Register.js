@@ -53,7 +53,7 @@ class Register extends Component {
             if(data.userId && data.success === 'true') {
                 this.saveAuthTokenInSession(data.token);
                 fetch(`http://localhost:3000/profile/${data.userId}`,{
-                    methos: 'get',
+                    method: 'get',
                     headers:{
                         'Content-Type': 'application/json',
                         'Authorization': data.token
@@ -61,6 +61,7 @@ class Register extends Component {
                 })
                 .then(response => response.json())
                 .then(user => {
+                    console.log(user);
                     if(user && user.email){
                         this.props.loadUser(user);
                         this.props.onRouteChange('home');
