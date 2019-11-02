@@ -59,7 +59,7 @@ class App extends Component {
 
   componentDidMount(){
     const token = window.sessionStorage.getItem('token');
-    if(token){
+    if(token) {
       fetch('http://localhost:3000/signin', {
         method: 'post',
         headers: {
@@ -68,12 +68,25 @@ class App extends Component {
         }
       })
       .then(resp => resp.json())
-      .then(user => {
-        if(user && user.email){
-          this.loadUser(user);
-          this.onRouteChange('home');
+      .then(data => {
+        if(data && data.id) {
+          fetch(`http://localhost:3000/profile/${data.id}`, {
+            method: 'get',
+            headers: {
+              'Content-type': 'application/json',
+              'Authorization': token
+            }
+          })
+          .then(resp => resp.json())
+          .then(user => {
+            if(user && user.email){
+              this.loadUser(user);
+              this.onRouteChange('home');
+            }
+          })
         }
       })
+      .catch(console.log)
     }
   }
 
