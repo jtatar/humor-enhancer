@@ -6,8 +6,8 @@ import Navigation from './components/Navigation/Navigation'
 import './App.css';
 
 const initialState = {
-  route: 'signin',
-  isSignedIn: false,
+  route: 'home',
+  isSignedIn: true,
   user: {
     id: '',
     name: '',
