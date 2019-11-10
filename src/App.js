@@ -3,11 +3,12 @@ import logo from './logo.svg';
 import Register from './components/Register/Register'
 import Signin from './components/Signin/Signin'
 import Navigation from './components/Navigation/Navigation'
+import Joke from './components/Joke/Joke'
 import './App.css';
 
 const initialState = {
-  route: 'home',
-  isSignedIn: true,
+  route: 'signin',
+  isSignedIn: false,
   user: {
     id: '',
     name: '',
@@ -98,7 +99,7 @@ class App extends Component {
         { route === 'home'
           ?
             <div>
-              Jesteś zalogowany
+              <Joke/>
             </div>
           : (
             route === 'signin'
