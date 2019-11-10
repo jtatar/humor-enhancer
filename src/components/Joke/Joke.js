@@ -16,6 +16,7 @@ class Joke extends Component {
     }
 
     getJoke = () => {
+        //move to api later
         fetch('https://sv443.net/jokeapi/category/Any')
         .then(resp => resp.json())
         .then(data => {
