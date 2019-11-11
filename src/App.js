@@ -16,6 +16,14 @@ const initialState = {
     email: '',
     joined: '',
     age: 0
+  },
+  joke: {
+    id: 0,
+    type: '',
+    category: '',
+    joke: '',
+    setup: '',
+    delivery: ''
   }
 }
 
@@ -35,6 +43,37 @@ class App extends Component {
       age: data.age
     }})
   }
+
+  loadJoke = (data) => {
+    if(data.type === 'single'){
+      this.setState({joke: {
+        id: data.id,
+        category: data.category,
+        type: data.type,
+        joke: data.joke
+      }})
+    } else if(data.type === 'twopart') {
+      this.setState({joke: {
+        id: data.id,
+        category: data.category,
+        type: data.type,
+        setup: data.setup,
+        delivery: data.delivery
+      }})
+    }
+  }
+
+  getJoke = () => {
+    fetch('http://localhost:3000/joke', {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': window.sessionStorage.getItem('token')
+        }
+    })
+    .then(resp => resp.json())
+    .then(data => this.loadJoke(data))
+  }
   
   onRouteChange = (route) => {
     if (route === 'signout') {
@@ -53,6 +92,7 @@ class App extends Component {
       window.sessionStorage.removeItem('token');
       return this.setState(initialState)
     } else if (route === 'home') {
+      this.getJoke();
       this.setState({isSignedIn: true})
     }
     this.setState({route: route});
@@ -92,14 +132,14 @@ class App extends Component {
   }
 
   render(){
-    const { isSignedIn, route, user } = this.state;
+    const { isSignedIn, route, user, joke} = this.state;
     return (
       <div className="App">
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
         { route === 'home'
           ?
             <div>
-              <Joke/>
+              <Joke getJoke={this.getJoke} joke={joke}/>
             </div>
           : (
             route === 'signin'
