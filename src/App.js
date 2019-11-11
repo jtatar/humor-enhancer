@@ -74,6 +74,20 @@ class App extends Component {
     .then(resp => resp.json())
     .then(data => this.loadJoke(data))
   }
+
+  setFavourite = () => {
+    fetch('http://localhost:3000/joke', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': window.sessionStorage.getItem('token')
+      },
+      body: JSON.stringify({
+        jokeid: this.state.joke.id,
+        userid: this.state.user.id
+      })
+    })
+  }
   
   onRouteChange = (route) => {
     if (route === 'signout') {
@@ -135,11 +149,11 @@ class App extends Component {
     const { isSignedIn, route, user, joke} = this.state;
     return (
       <div className="App">
-        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
+        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} user={user}/>
         { route === 'home'
           ?
             <div>
-              <Joke getJoke={this.getJoke} joke={joke}/>
+              <Joke getJoke={this.getJoke} joke={joke} setFavourite={this.setFavourite}/>
             </div>
           : (
             route === 'signin'

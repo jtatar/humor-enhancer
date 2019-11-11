@@ -2,7 +2,7 @@ import React from 'react'
 import { Icon } from 'semantic-ui-react'
 import './Joke.css'
 
-const Joke = ({getJoke, joke}) => {
+const Joke = ({getJoke, joke, setFavourite}) => {
     return(
         <div className='center ma'>
             <div className='mt2'>
@@ -26,7 +26,7 @@ const Joke = ({getJoke, joke}) => {
             }
                 <div className='icons'>
                     <Icon className='pr4' name='refresh' size='big' onClick={getJoke}/>
-                    <Icon name='like' size='big'/>
+                    <Icon name='like' size='big' onClick={setFavourite}/>
                 </div>
             </div>
         </div>

@@ -17,9 +17,12 @@ class ProfileIcon extends Component{
     }
 
     render(){
+        const {user} = this.props;
         const trigger =  (
             <span>
-                <Image avatar src={'https://avatarfiles.alphacoders.com/893/thumb-89303.gif'} size="tiny"/>
+                <p className="f4">{user.name} {user.surname} &nbsp;
+                    <Image avatar src={'https://avatarfiles.alphacoders.com/893/thumb-89303.gif'} size="mini"/>
+                </p>
             </span>
         )
     
