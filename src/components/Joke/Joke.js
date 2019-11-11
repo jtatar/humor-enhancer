@@ -16,8 +16,13 @@ class Joke extends Component {
     }
 
     getJoke = () => {
-        //move to api later
-        fetch('https://sv443.net/jokeapi/category/Any')
+        fetch('http://localhost:3000/joke', {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': window.sessionStorage.getItem('token')
+            }
+        })
         .then(resp => resp.json())
         .then(data => {
             if(data && data.type && data.id){
