@@ -24,7 +24,8 @@ const initialState = {
     joke: '',
     setup: '',
     delivery: ''
-  }
+  },
+  favourites: []
 }
 
 class App extends Component {
@@ -61,6 +62,10 @@ class App extends Component {
         delivery: data.delivery
       }})
     }
+  }
+
+  loadFavourites = (data) => {
+    this.setState({favourites: data});
   }
 
   getJoke = () => {
@@ -137,6 +142,17 @@ class App extends Component {
             if(user && user.email){
               this.loadUser(user);
               this.onRouteChange('home');
+              fetch(`http://localhost:3000/favourite/${data.id}`,{
+                method: 'get',
+                headers: {
+                  'Content-type': 'application/json',
+                  'Authorization': token
+                }
+              })
+              .then(resp => resp.json())
+              .then(user => {
+                this.loadFavourites(user);
+              })
             }
           })
         }
