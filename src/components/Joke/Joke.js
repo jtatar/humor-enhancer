@@ -13,7 +13,7 @@ class Joke extends Component{
     }
 
     render(){
-        const { getJoke, joke } = this.props;
+        const { getJoke, joke, route } = this.props;
         return(
             <div className='center ma'>
                 <div className='mt2'>
@@ -35,10 +35,16 @@ class Joke extends Component{
                         <p>Couldn't load joke</p>
                     )
                 }
+                {
+                    route === 'home'
+                    ?
                     <div className='icons'>
                         <Icon className='pr4' name='refresh' size='big' onClick={getJoke}/>
                         <Icon name='like' size='big' onClick={this.onFavouriteClick}/>
                     </div>
+                    :
+                    <p></p>
+                }
                 </div>
             </div>
         );

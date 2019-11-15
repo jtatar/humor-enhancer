@@ -16,6 +16,11 @@ class ProfileIcon extends Component{
         onRouteChange('signout');
     }
 
+    onProfileGet = () =>{
+        const{onRouteChange} = this.props;
+        onRouteChange('profile');
+    }
+
     render(){
         const {user} = this.props;
         const trigger =  (
@@ -27,7 +32,7 @@ class ProfileIcon extends Component{
         )
     
         const options = [
-            { key: 'profile', text: 'Profile', icon: 'user' },
+            { key: 'profile', text: 'Profile', icon: 'user', onClick:this.onProfileGet},
             { key: 'settings', text: 'Settings', icon: 'settings' },
             { key: 'sign-out', text: 'Sign Out', icon: 'sign out', onClick:this.onSignOut}
           ]

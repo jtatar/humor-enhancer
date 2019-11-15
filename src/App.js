@@ -4,6 +4,7 @@ import Register from './components/Register/Register'
 import Signin from './components/Signin/Signin'
 import Navigation from './components/Navigation/Navigation'
 import Joke from './components/Joke/Joke'
+import Profile from './components/Profile/Profile'
 import './App.css';
 
 const initialState = {
@@ -162,19 +163,23 @@ class App extends Component {
   }
 
   render(){
-    const { isSignedIn, route, user, joke} = this.state;
+    const { isSignedIn, route, user, joke, favourites} = this.state;
     return (
       <div className="App">
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} user={user}/>
         { route === 'home'
           ?
             <div>
-              <Joke getJoke={this.getJoke} joke={joke} setFavourite={this.setFavourite}/>
+              <Joke getJoke={this.getJoke} route={route} joke={joke} setFavourite={this.setFavourite}/>
             </div>
           : (
             route === 'signin'
             ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-            : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+            : (
+                route=== 'profile'
+                ?<Profile user={user} route={route} favourites={favourites}/>
+                :<Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+              )
           ) 
         }
       </div>

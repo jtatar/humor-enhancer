@@ -4,7 +4,8 @@ import ProfileIcon from '../Profile/Profileicon'
 const Navigation = ({ onRouteChange, isSignedIn, user }) => {
     if (isSignedIn) {
         return (
-            <nav style = {{display: 'flex', justifyContent: 'flex-end'}}>
+            <nav style = {{display: 'flex', justifyContent: 'space-between'}}>
+                <p onClick={() => onRouteChange('home')} className='f3 link dim black underline pa4 pointer'>Home</p>
                 <ProfileIcon onRouteChange={onRouteChange} user={user}/>
             </nav>
         );

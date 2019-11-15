@@ -1,0 +1,13 @@
+.profile-main {
+    background-color: rgba(255,255,255,0.8);
+    font-family: "Courier New", Courier, monospace;
+    text-align: center;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.top-line {
+    display:flex;
+    justify-content:flex-start;
+}
