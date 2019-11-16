@@ -2,21 +2,47 @@ import React, { Component } from 'react'
 import { Icon } from 'semantic-ui-react'
 import './Joke.css'
 
+const initialState = {
+    isFavourite: false
+}
+
 class Joke extends Component{
     constructor(props){
         super(props);
+        this.state = initialState;
     }
 
     onFavouriteClick = () =>{
         const { setFavourite } = this.props;
+        this.setState((prevState) => ({
+            isFavourite: !prevState.isFavourite
+        }));
         setFavourite();
     }
 
+    checkIfFavourite = () => {
+        const { favourites, joke } = this.props;
+        if(favourites.includes(joke.id)){
+            this.setState({isFavourite:true});
+        }
+    }
+
+    loadJoke = () => {
+        const { getJoke } = this.props;
+        getJoke();
+        this.checkIfFavourite();
+    }
+
+    componentDidMount(){
+        this.checkIfFavourite();
+    }
+
     render(){
-        const { getJoke, joke, route } = this.props;
+        const {joke, route } = this.props;
+        const {isFavourite} = this.state;
         return(
-            <div className='center ma'>
-                <div className='mt2'>
+            <div className='center ma mw8'>
+                <div className='mt2 w-100'>
                 {   
                     joke.type === 'single'
                     ?
@@ -39,11 +65,20 @@ class Joke extends Component{
                     route === 'home'
                     ?
                     <div className='icons'>
-                        <Icon className='pr4' name='refresh' size='big' onClick={getJoke}/>
-                        <Icon name='like' size='big' onClick={this.onFavouriteClick}/>
+                        <Icon className='pr4' name='refresh' size='big' onClick={this.loadJoke}/>
+                        {
+                            isFavourite
+                            ?
+                                <Icon name='like' size='big' color='red' onClick={this.onFavouriteClick}/>
+                            :
+                                <Icon name='like' size='big' onClick={this.onFavouriteClick}/>
+                        }
                     </div>
-                    :
-                    <p></p>
+                    :(
+                        <div  className='icons'>
+                            <Icon name='like' size='big' onClick={this.onFavouriteClick}/>
+                        </div>
+                    )
                 }
                 </div>
             </div>

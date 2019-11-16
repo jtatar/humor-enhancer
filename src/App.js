@@ -26,7 +26,8 @@ const initialState = {
     setup: '',
     delivery: ''
   },
-  favourites: []
+  favourites: [],
+  jokes: []
 }
 
 class App extends Component {
@@ -67,6 +68,7 @@ class App extends Component {
 
   loadFavourites = (data) => {
     this.setState({favourites: data});
+    this.loadFavouriteJokes(data);
   }
 
   getJoke = () => {
@@ -93,6 +95,8 @@ class App extends Component {
         userid: this.state.user.id
       })
     })
+    .then(this.getFavourites(this.state.user, window.sessionStorage.getItem('token')))
+    .catch(console.log)
   }
   
   onRouteChange = (route) => {
@@ -114,8 +118,43 @@ class App extends Component {
     } else if (route === 'home') {
       this.getJoke();
       this.setState({isSignedIn: true})
+    } else if (route === 'profile'){
+      this.getFavourites(this.state.user, window.sessionStorage.getItem('token'));
     }
     this.setState({route: route});
+  }
+
+  getFavourites = (user, token) => {
+    fetch(`http://localhost:3000/favourite/${user.id}`,{
+      method: 'get',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': token
+      }
+    })
+    .then(resp => resp.json())
+    .then(user => {
+      this.loadFavourites(user);
+    })
+  }
+
+  loadFavouriteJokes = (favourites) =>{
+    fetch('http://localhost:3000/favourite',{
+        method:'post',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': window.sessionStorage.getItem('token')
+        },
+        body: JSON.stringify({
+            favourites: favourites
+        })
+    })
+    .then(resp => resp.json())
+    .then(jokes => this.setJokes(jokes.jokes))
+  }
+
+  setJokes = (jokes) => {
+    this.setState({jokes: jokes});
   }
 
   componentDidMount(){
@@ -143,17 +182,7 @@ class App extends Component {
             if(user && user.email){
               this.loadUser(user);
               this.onRouteChange('home');
-              fetch(`http://localhost:3000/favourite/${data.id}`,{
-                method: 'get',
-                headers: {
-                  'Content-type': 'application/json',
-                  'Authorization': token
-                }
-              })
-              .then(resp => resp.json())
-              .then(user => {
-                this.loadFavourites(user);
-              })
+              this.getFavourites(data, token);
             }
           })
         }
@@ -163,21 +192,21 @@ class App extends Component {
   }
 
   render(){
-    const { isSignedIn, route, user, joke, favourites} = this.state;
+    const { isSignedIn, route, user, joke, favourites, jokes} = this.state;
     return (
       <div className="App">
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} user={user}/>
         { route === 'home'
           ?
             <div>
-              <Joke getJoke={this.getJoke} route={route} joke={joke} setFavourite={this.setFavourite}/>
+              <Joke getJoke={this.getJoke} route={route} joke={joke} setFavourite={this.setFavourite} favourites={favourites}/>
             </div>
           : (
             route === 'signin'
             ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
             : (
                 route=== 'profile'
-                ?<Profile user={user} route={route} favourites={favourites}/>
+                ?<Profile user={user} route={route} favourites={favourites} jokes={jokes}/>
                 :<Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
               )
           ) 
