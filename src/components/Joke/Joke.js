@@ -30,7 +30,7 @@ class Joke extends Component{
     loadJoke = () => {
         const { getJoke } = this.props;
         getJoke();
-        this.checkIfFavourite();
+            this.checkIfFavourite();
     }
 
     componentDidMount(){
@@ -38,8 +38,7 @@ class Joke extends Component{
     }
 
     render(){
-        const {joke, route } = this.props;
-        const {isFavourite} = this.state;
+        const {joke, route, isFavourite } = this.props;
         return(
             <div className='center ma mw8'>
                 <div className='mt2 w-100'>

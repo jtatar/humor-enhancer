@@ -27,7 +27,8 @@ const initialState = {
     delivery: ''
   },
   favourites: [],
-  jokes: []
+  jokes: [],
+  isFavourite: false
 }
 
 class App extends Component {
@@ -63,6 +64,11 @@ class App extends Component {
         setup: data.setup,
         delivery: data.delivery
       }})
+    }
+    if(this.state.favourites.includes(data.id)){
+      this.setState({isFavourite: true})
+    } else {
+      this.setState({isFavourite: false})
     }
   }
 
@@ -192,14 +198,14 @@ class App extends Component {
   }
 
   render(){
-    const { isSignedIn, route, user, joke, favourites, jokes} = this.state;
+    const { isSignedIn, route, user, joke, favourites, jokes, isFavourite} = this.state;
     return (
       <div className="App">
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} user={user}/>
         { route === 'home'
           ?
             <div>
-              <Joke getJoke={this.getJoke} route={route} joke={joke} setFavourite={this.setFavourite} favourites={favourites}/>
+              <Joke getJoke={this.getJoke} route={route} joke={joke} setFavourite={this.setFavourite} favourites={favourites} isFavourite={isFavourite}/>
             </div>
           : (
             route === 'signin'
