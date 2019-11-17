@@ -119,6 +119,7 @@ class App extends Component {
         userid: this.state.user.id
       })
     })
+    .then(this.getFavourites(this.state.user, window.sessionStorage.getItem('token')))
     .then(this.setState({isFavourite: false}))
     .catch(console.log)
   }

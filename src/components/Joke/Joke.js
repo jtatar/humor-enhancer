@@ -2,15 +2,7 @@ import React, { Component } from 'react'
 import { Icon } from 'semantic-ui-react'
 import './Joke.css'
 
-const initialState = {
-    toggleIcon: true
-}
-
 class Joke extends Component{
-    constructor(props){
-        super(props);
-        this.state = initialState;
-    }
 
     onFavouriteClick = () =>{
         const { setFavourite, delFavourite, isFavourite } = this.props;
