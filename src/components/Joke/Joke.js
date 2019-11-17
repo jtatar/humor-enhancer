@@ -3,7 +3,7 @@ import { Icon } from 'semantic-ui-react'
 import './Joke.css'
 
 const initialState = {
-    isFavourite: false
+    toggleIcon: true
 }
 
 class Joke extends Component{
@@ -13,28 +13,17 @@ class Joke extends Component{
     }
 
     onFavouriteClick = () =>{
-        const { setFavourite } = this.props;
-        this.setState((prevState) => ({
-            isFavourite: !prevState.isFavourite
-        }));
-        setFavourite();
-    }
-
-    checkIfFavourite = () => {
-        const { favourites, joke } = this.props;
-        if(favourites.includes(joke.id)){
-            this.setState({isFavourite:true});
+        const { setFavourite, delFavourite, isFavourite } = this.props;
+        if(isFavourite){
+            delFavourite();
+        } else {
+            setFavourite();
         }
     }
 
     loadJoke = () => {
         const { getJoke } = this.props;
         getJoke();
-            this.checkIfFavourite();
-    }
-
-    componentDidMount(){
-        this.checkIfFavourite();
     }
 
     render(){
@@ -66,7 +55,7 @@ class Joke extends Component{
                     <div className='icons'>
                         <Icon className='pr4' name='refresh' size='big' onClick={this.loadJoke}/>
                         {
-                            isFavourite
+                            (isFavourite)
                             ?
                                 <Icon name='like' size='big' color='red' onClick={this.onFavouriteClick}/>
                             :

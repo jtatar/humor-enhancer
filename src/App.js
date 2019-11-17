@@ -90,6 +90,7 @@ class App extends Component {
   }
 
   setFavourite = () => {
+    //should change fetch to favourite
     fetch('http://localhost:3000/joke', {
       method: 'post',
       headers: {
@@ -102,6 +103,23 @@ class App extends Component {
       })
     })
     .then(this.getFavourites(this.state.user, window.sessionStorage.getItem('token')))
+    .then(this.setState({isFavourite: true}))
+    .catch(console.log)
+  }
+
+  delFavourite = () => {
+    fetch('http://localhost:3000/favourite', {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': window.sessionStorage.getItem('token')
+      },
+      body: JSON.stringify({
+        jokeid: this.state.joke.id,
+        userid: this.state.user.id
+      })
+    })
+    .then(this.setState({isFavourite: false}))
     .catch(console.log)
   }
   
@@ -205,7 +223,7 @@ class App extends Component {
         { route === 'home'
           ?
             <div>
-              <Joke getJoke={this.getJoke} route={route} joke={joke} setFavourite={this.setFavourite} favourites={favourites} isFavourite={isFavourite}/>
+              <Joke getJoke={this.getJoke} route={route} joke={joke} setFavourite={this.setFavourite} favourites={favourites} isFavourite={isFavourite} delFavourite={this.delFavourite}/>
             </div>
           : (
             route === 'signin'
