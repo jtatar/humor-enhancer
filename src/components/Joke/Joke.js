@@ -13,10 +13,10 @@ class Joke extends Component{
         }
     }
 
-    onFavouriteClickProfile = () =>{
+    onFavouriteClickProfile = (event) =>{
+        event.target.parentElement.parentElement.remove()
         const {delFavouriteById, userid, joke} = this.props;
         delFavouriteById(userid,joke.id);
-        this.forceUpdate();
     }
 
     loadJoke = () => {

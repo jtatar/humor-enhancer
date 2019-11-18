@@ -22,7 +22,7 @@ class ProfileIcon extends Component{
     }
 
     render(){
-        const {user} = this.props;
+        const {user, toggleModal} = this.props;
         const trigger =  (
             <span>
                 <p className="f4">{user.name} {user.surname} &nbsp;
@@ -33,7 +33,7 @@ class ProfileIcon extends Component{
     
         const options = [
             { key: 'profile', text: 'Profile', icon: 'user', onClick:this.onProfileGet},
-            { key: 'settings', text: 'Settings', icon: 'settings' },
+            { key: 'settings', text: 'Settings', icon: 'settings', onClick:toggleModal },
             { key: 'sign-out', text: 'Sign Out', icon: 'sign out', onClick:this.onSignOut}
           ]
 

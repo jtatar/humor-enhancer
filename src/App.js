@@ -5,6 +5,8 @@ import Signin from './components/Signin/Signin'
 import Navigation from './components/Navigation/Navigation'
 import Joke from './components/Joke/Joke'
 import Profile from './components/Profile/Profile'
+import ProfileUpdate from './components/Profile/ProfileUpdate'
+import Modal from './components/Modal/Modal'
 import './App.css';
 
 const initialState = {
@@ -28,13 +30,21 @@ const initialState = {
   },
   favourites: [],
   jokes: [],
-  isFavourite: false
+  isFavourite: false,
+  isProfileOpen: false
 }
 
 class App extends Component {
   constructor(){
     super();
     this.state = initialState;
+  }
+
+  toggleModal = () => {
+    this.setState(prevState => ({
+      ...prevState,
+      isProfileOpen: !prevState.isProfileOpen
+    }))
   }
   
   loadUser = (data) => {
@@ -233,10 +243,20 @@ class App extends Component {
   }
 
   render(){
-    const { isSignedIn, route, user, joke, favourites, jokes, isFavourite} = this.state;
+    const { isSignedIn, route, user, joke, favourites, jokes, isFavourite, isProfileOpen} = this.state;
     return (
       <div className="App">
-        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} user={user}/>
+        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} user={user} toggleModal={this.toggleModal}/>
+        {isProfileOpen &&
+        <Modal>
+          <ProfileUpdate
+            isProfileOpen = {isProfileOpen}
+            toggleModal = {this.toggleModal}
+            loadUser = {this.loadUser}
+            user ={user}
+          />
+        </Modal>
+        }
         { route === 'home'
           ?
             <div>
