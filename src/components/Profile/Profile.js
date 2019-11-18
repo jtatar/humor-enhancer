@@ -6,7 +6,7 @@ import './Profile.css';
 class Profile extends Component{
 
     render(){
-        const {user, route, jokes} = this.props;
+        const {user, route, jokes, delFavouriteById} = this.props;
         return(
             <div className='profile-main'>
                 <article className="w-100 center">
@@ -21,7 +21,7 @@ class Profile extends Component{
                                     jokes.length ?
                                     jokes.map((joke) => {
                                         return(
-                                            <Joke key={joke.id} joke={joke} route={route} favourites={this.props.favourites}/>
+                                            <Joke key={`jokeid${joke.id}`} joke={joke} userid={user.id} delFavouriteById={delFavouriteById} route={route} />
                                         );
                                     })
                                     : <p>Couldn't load joke</p>

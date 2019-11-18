@@ -123,6 +123,22 @@ class App extends Component {
     .then(this.setState({isFavourite: false}))
     .catch(console.log)
   }
+
+  delFavouriteById = (userid, jokeid) => {
+    fetch('http://localhost:3000/favourite', {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': window.sessionStorage.getItem('token')
+      },
+      body: JSON.stringify({
+        jokeid: jokeid,
+        userid: userid
+      })
+    })
+    .then(this.getFavourites(this.state.user, window.sessionStorage.getItem('token')))
+    .catch(console.log)
+  }
   
   onRouteChange = (route) => {
     if (route === 'signout') {
@@ -231,7 +247,7 @@ class App extends Component {
             ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
             : (
                 route=== 'profile'
-                ?<Profile user={user} route={route} favourites={favourites} jokes={jokes}/>
+                ?<Profile user={user} route={route} jokes={jokes} delFavouriteById={this.delFavouriteById}/>
                 :<Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
               )
           ) 

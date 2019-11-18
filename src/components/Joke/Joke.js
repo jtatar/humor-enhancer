@@ -13,6 +13,12 @@ class Joke extends Component{
         }
     }
 
+    onFavouriteClickProfile = () =>{
+        const {delFavouriteById, userid, joke} = this.props;
+        delFavouriteById(userid,joke.id);
+        this.forceUpdate();
+    }
+
     loadJoke = () => {
         const { getJoke } = this.props;
         getJoke();
@@ -56,7 +62,7 @@ class Joke extends Component{
                     </div>
                     :(
                         <div  className='icons'>
-                            <Icon name='like' size='big' onClick={this.onFavouriteClick}/>
+                            <Icon name='like' size='big' color='red' onClick={this.onFavouriteClickProfile}/>
                         </div>
                     )
                 }
