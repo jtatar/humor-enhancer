@@ -31,7 +31,8 @@ const initialState = {
   favourites: [],
   jokes: [],
   isFavourite: false,
-  isProfileOpen: false
+  isProfileOpen: false,
+  jokeCount: 0
 }
 
 class App extends Component {
@@ -80,11 +81,28 @@ class App extends Component {
     } else {
       this.setState({isFavourite: false})
     }
+    this.loadJokeLikes(data.id);
   }
 
   loadFavourites = (data) => {
     this.setState({favourites: data});
     this.loadFavouriteJokes(data);
+  }
+
+  setLikes = (data) => {
+    this.setState({jokeCount: data[0].count})
+  }
+
+  loadJokeLikes = (data) => {
+    fetch(`http://localhost:3000/likes/${data}`,{
+        method:'get',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': window.sessionStorage.getItem('token')
+        }
+    })
+    .then(resp => resp.json())
+    .then(likes => this.setLikes(likes))
   }
 
   getJoke = () => {
@@ -243,7 +261,7 @@ class App extends Component {
   }
 
   render(){
-    const { isSignedIn, route, user, joke, favourites, jokes, isFavourite, isProfileOpen} = this.state;
+    const { isSignedIn, route, user, joke, favourites, jokes, isFavourite, isProfileOpen, jokeCount} = this.state;
     return (
       <div className="App">
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} user={user} toggleModal={this.toggleModal}/>
@@ -260,7 +278,7 @@ class App extends Component {
         { route === 'home'
           ?
             <div>
-              <Joke getJoke={this.getJoke} route={route} joke={joke} setFavourite={this.setFavourite} favourites={favourites} isFavourite={isFavourite} delFavourite={this.delFavourite}/>
+              <Joke getJoke={this.getJoke} route={route} joke={joke} setFavourite={this.setFavourite} favourites={favourites} isFavourite={isFavourite} jokeCount={jokeCount} delFavourite={this.delFavourite}/>
             </div>
           : (
             route === 'signin'

@@ -25,7 +25,7 @@ class Joke extends Component{
     }
 
     render(){
-        const {joke, route, isFavourite } = this.props;
+        const {joke, route, isFavourite, jokeCount } = this.props;
         return(
             <div className='center ma mw8'>
                 <div className='mt2 w-100'>
@@ -55,12 +55,12 @@ class Joke extends Component{
                             (isFavourite)
                             ?
                                 <div className='likeBox'>
-                                    <p className='b fw9 cursorText'>You and 50 people likes this &nbsp;</p>
+                                    <p className='b fw9 cursorText'>You and {jokeCount} people likes this &nbsp;</p>
                                     <Icon name='like' size='big' color='red' onClick={this.onFavouriteClick}/>
                                 </div>
                             :
                                 <div className='likeBox'>
-                                    <p className='b fw9 cursorText'>50 people likes this &nbsp;</p>
+                                    <p className='b fw9 cursorText'>{jokeCount} people likes this &nbsp;</p>
                                     <Icon name='like' size='big' onClick={this.onFavouriteClick}/>
                                 </div>
                         }
