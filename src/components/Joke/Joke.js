@@ -51,14 +51,20 @@ class Joke extends Component{
                     route === 'home'
                     ?
                     <div className='icons'>
-                        <Icon className='pr4' name='refresh' size='big' onClick={this.loadJoke}/>
                         {
                             (isFavourite)
                             ?
-                                <Icon name='like' size='big' color='red' onClick={this.onFavouriteClick}/>
+                                <div className='likeBox'>
+                                    <p className='b fw9 cursorText'>You and 50 people likes this &nbsp;</p>
+                                    <Icon name='like' size='big' color='red' onClick={this.onFavouriteClick}/>
+                                </div>
                             :
-                                <Icon name='like' size='big' onClick={this.onFavouriteClick}/>
+                                <div className='likeBox'>
+                                    <p className='b fw9 cursorText'>50 people likes this &nbsp;</p>
+                                    <Icon name='like' size='big' onClick={this.onFavouriteClick}/>
+                                </div>
                         }
+                        <Icon className='pr4' name='refresh' size='big' onClick={this.loadJoke}/>
                     </div>
                     :(
                         <div  className='icons'>

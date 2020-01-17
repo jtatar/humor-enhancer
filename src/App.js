@@ -88,7 +88,7 @@ class App extends Component {
   }
 
   getJoke = () => {
-    fetch('https://tai-polsl-api.herokuapp.com/joke', {
+    fetch('http://localhost:3000/joke', {
         method: 'get',
         headers: {
             'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ class App extends Component {
 
   setFavourite = () => {
     //should change fetch to favourite
-    fetch('https://tai-polsl-api.herokuapp.com/joke', {
+    fetch('http://localhost:3000/joke', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ class App extends Component {
   }
 
   delFavourite = () => {
-    fetch('https://tai-polsl-api.herokuapp.com/favourite', {
+    fetch('http://localhost:3000/favourite', {
       method: 'delete',
       headers: {
         'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ class App extends Component {
   }
 
   delFavouriteById = (userid, jokeid) => {
-    fetch('https://tai-polsl-api.herokuapp.com/favourite', {
+    fetch('http://localhost:3000/favourite', {
       method: 'delete',
       headers: {
         'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ class App extends Component {
   
   onRouteChange = (route) => {
     if (route === 'signout') {
-      fetch('https://tai-polsl-api.herokuapp.com/signout', {
+      fetch('http://localhost:3000/signout', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
@@ -176,7 +176,7 @@ class App extends Component {
   }
 
   getFavourites = (user, token) => {
-    fetch(`https://tai-polsl-api.herokuapp.com/favourite/${user.id}`,{
+    fetch(`http://localhost:3000/favourite/${user.id}`,{
       method: 'get',
       headers: {
         'Content-type': 'application/json',
@@ -190,7 +190,7 @@ class App extends Component {
   }
 
   loadFavouriteJokes = (favourites) =>{
-    fetch('https://tai-polsl-api.herokuapp.com/favourite',{
+    fetch('http://localhost:3000/favourite',{
         method:'post',
         headers: {
             'Content-Type': 'application/json',
@@ -211,7 +211,7 @@ class App extends Component {
   componentDidMount(){
     const token = window.sessionStorage.getItem('token');
     if(token) {
-      fetch('https://tai-polsl-api.herokuapp.com/signin', {
+      fetch('http://localhost:3000/signin', {
         method: 'post',
         headers: {
           'Content-type': 'application/json',
@@ -221,7 +221,7 @@ class App extends Component {
       .then(resp => resp.json())
       .then(data => {
         if(data && data.id) {
-          fetch(`https://tai-polsl-api.herokuapp.com/profile/${data.id}`, {
+          fetch(`http://localhost:3000/profile/${data.id}`, {
             method: 'get',
             headers: {
               'Content-type': 'application/json',

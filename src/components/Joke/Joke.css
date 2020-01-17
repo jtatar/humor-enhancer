@@ -10,9 +10,19 @@
     word-wrap: break-word;
     white-space: pre-line;
 }
+
 .icons{
     margin-top:10px;
     display:flex;
     justify-content: flex-end;
     cursor: pointer;
+}
+
+.likeBox{
+    display:flex;
+    justify-content: flex-end;
+}
+
+.cursorText{
+    cursor: text;
 }
