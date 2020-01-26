@@ -9,7 +9,7 @@ class SearchBar extends Component{
     state = initialState;
 
     handleResultSelect = (e, { result }) => {
-        const { onRouteChange, setUserInfo} = this.props;
+
         this.setState({ value: result.title })
 
         fetch(`https://tai-polsl-api.herokuapp.com/userprofile/${result.id}`,{
@@ -64,6 +64,7 @@ class SearchBar extends Component{
 
     render(){
         const { isLoading, value, results } = this.state;
+        const { onRouteChange, setUserInfo} = this.props;
         return(
             <Search
                 loading={isLoading}
