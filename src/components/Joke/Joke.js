@@ -91,9 +91,13 @@ class Joke extends Component{
                         <Icon className='pr4' name='refresh' size='big' onClick={this.loadJoke}/>
                     </div>
                     :(
-                        <div  className='icons'>
-                            <Icon name='like' size='big' color='red' onClick={this.onFavouriteClickProfile}/>
-                        </div>
+                        route==='getprofile'
+                        ? <div></div>
+                        :(
+                            <div  className='icons'>
+                                <Icon name='like' size='big' color='red' onClick={this.onFavouriteClickProfile}/>
+                            </div>
+                        )
                     )
                 }
                 </div>

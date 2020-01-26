@@ -27,6 +27,13 @@ const initialState = {
     setup: '',
     delivery: ''
   },
+  userInfo: {
+    id: '',
+    name: '',
+    surname: '',
+    age: 0,
+    joined: ''
+  },
   favourites: [],
   jokes: [],
   isFavourite: false,
@@ -188,6 +195,8 @@ class App extends Component {
       this.setState({isSignedIn: true})
     } else if (route === 'profile'){
       this.getFavourites(this.state.user, window.sessionStorage.getItem('token'));
+    } else if (route ==='getprofile'){
+      this.getFavourites(this.state.userInfo, window.sessionStorage.getItem('token'));
     }
     this.setState({route: route});
   }
@@ -225,6 +234,16 @@ class App extends Component {
     this.setState({jokes: jokes});
   }
 
+  setUserInfo = (data) => {
+    this.setState({userInfo: {
+      id: data.id,
+      name: data.name,
+      surname: data.surname,
+      joined: data.joined,
+      age: data.age
+    }})
+  }
+
   componentDidMount(){
     const token = window.sessionStorage.getItem('token');
     if(token) {
@@ -260,10 +279,10 @@ class App extends Component {
   }
 
   render(){
-    const { isSignedIn, route, user, joke, favourites, jokes, isFavourite, isProfileOpen, jokeCount} = this.state;
+    const { isSignedIn, route, user, joke, favourites, jokes, isFavourite, isProfileOpen, jokeCount, userInfo} = this.state;
     return (
       <div className="App">
-        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} user={user} toggleModal={this.toggleModal}/>
+        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} user={user} toggleModal={this.toggleModal} setUserInfo={this.setUserInfo}/>
         {isProfileOpen &&
         <Modal>
           <ProfileUpdate
@@ -284,8 +303,12 @@ class App extends Component {
             ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
             : (
                 route=== 'profile'
-                ?<Profile user={user} route={route} jokes={jokes} delFavouriteById={this.delFavouriteById}/>
-                :<Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+                ?<Profile user={user} route={route} jokes={jokes} delFavouriteById={this.delFavouriteById} myProfile={'true'}/>
+                : (
+                  route === 'getprofile'
+                  ? <Profile user={userInfo} route={route} jokes={jokes} delFavouriteById={null} myProfile={'false'}/>
+                  : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+                  )
               )
           ) 
         }
