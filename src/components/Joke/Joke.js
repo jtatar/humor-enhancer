@@ -55,12 +55,36 @@ class Joke extends Component{
                             (isFavourite)
                             ?
                                 <div className='likeBox'>
-                                    <p className='b fw9 cursorText'>You and {jokeCount} people likes this &nbsp;</p>
+                                    {
+                                        jokeCount === 0
+                                        ?
+                                            <p className='b fw9 cursorText'>You like this &nbsp;</p>
+                                        : (
+                                            jokeCount === 1
+                                            ?
+                                                <p className='b fw9 cursorText'>You and {jokeCount} person like this &nbsp;</p>
+                                            : (
+                                                <p className='b fw9 cursorText'>You and {jokeCount} people like this &nbsp;</p>
+                                            )
+                                        )
+                                    }
                                     <Icon name='like' size='big' color='red' onClick={this.onFavouriteClick}/>
                                 </div>
                             :
                                 <div className='likeBox'>
-                                    <p className='b fw9 cursorText'>{jokeCount} people likes this &nbsp;</p>
+                                    {
+                                        jokeCount === 0
+                                        ?
+                                            <p className='b fw9 cursorText'>No one like this &nbsp;</p>
+                                        : (
+                                            jokeCount === 1
+                                            ?
+                                                <p className='b fw9 cursorText'>{jokeCount} person like this &nbsp;</p>
+                                            : (
+                                                <p className='b fw9 cursorText'>{jokeCount} people like this &nbsp;</p>
+                                            )
+                                        )
+                                    }
                                     <Icon name='like' size='big' onClick={this.onFavouriteClick}/>
                                 </div>
                         }

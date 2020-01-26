@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import Register from './components/Register/Register'
 import Signin from './components/Signin/Signin'
 import Navigation from './components/Navigation/Navigation'
@@ -90,7 +89,7 @@ class App extends Component {
   }
 
   setLikes = (data) => {
-    this.setState({jokeCount: data[0].count})
+    this.setState({jokeCount: Number(data[0].count)})
   }
 
   loadJokeLikes = (data) => {

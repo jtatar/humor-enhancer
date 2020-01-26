@@ -1,0 +1,9 @@
+.ui.input {
+    width:300px
+}
+
+@media screen and (max-width:600px) {
+    .ui.input {
+        width:200px;
+    }
+}
