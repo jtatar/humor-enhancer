@@ -37,7 +37,7 @@ class Register extends Component {
     }
 
     onSubmitRegister = () => {
-        fetch('http://localhost:3000/register', {
+        fetch('https://tai-polsl-api.herokuapp.com/register', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -52,7 +52,7 @@ class Register extends Component {
         .then(data => {
             if(data.userId && data.success === 'true') {
                 this.saveAuthTokenInSession(data.token);
-                fetch(`http://localhost:3000/profile/${data.userId}`,{
+                fetch(`https://tai-polsl-api.herokuapp.com/profile/${data.userId}`,{
                     method: 'get',
                     headers:{
                         'Content-Type': 'application/json',

@@ -12,7 +12,7 @@ class SearchBar extends Component{
     const { onRouteChange, setUserInfo} = this.props;
         this.setState({ value: result.title })
 
-        fetch(`http://localhost:3000/userprofile/${result.id}`,{
+        fetch(`https://tai-polsl-api.herokuapp.com/userprofile/${result.id}`,{
             method: 'get',
             headers: {
                 'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ class SearchBar extends Component{
             setTimeout(() => {
             if (this.state.value.length < 1) return this.setState(initialState)
             
-            fetch(`http://localhost:3000/user/${value}`, {
+            fetch(`https://tai-polsl-api.herokuapp.com/user/${value}`, {
                 method: 'get',
                 headers: {
                     'Content-Type': 'application/json',
