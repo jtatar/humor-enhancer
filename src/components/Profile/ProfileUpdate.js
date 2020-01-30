@@ -30,7 +30,8 @@ class ProfileUpdate extends React.Component {
     }
 
     onProfileUpdate = (data) => {
-        fetch(`http://localhost:3000/profile/${this.props.user.id}`, {
+        fetch(`https://tai-polsl-api.herokuapp.com/profile/${this.props.user.id}`, {
+            
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',
