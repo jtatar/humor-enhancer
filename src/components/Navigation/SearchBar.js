@@ -7,12 +7,12 @@ const initialState = { isLoading: false, results: [], value: '' }
 
 class SearchBar extends Component{
     state = initialState;
-
+    
     handleResultSelect = (e, { result }) => {
-
+    const { onRouteChange, setUserInfo} = this.props;
         this.setState({ value: result.title })
 
-        fetch(`https://tai-polsl-api.herokuapp.com/userprofile/${result.id}`,{
+        fetch(`http://localhost:3000/userprofile/${result.id}`,{
             method: 'get',
             headers: {
                 'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ class SearchBar extends Component{
             setTimeout(() => {
             if (this.state.value.length < 1) return this.setState(initialState)
             
-            fetch(`https://tai-polsl-api.herokuapp.com/user/${value}`, {
+            fetch(`http://localhost:3000/user/${value}`, {
                 method: 'get',
                 headers: {
                     'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ class SearchBar extends Component{
 
     render(){
         const { isLoading, value, results } = this.state;
-        const { onRouteChange, setUserInfo} = this.props;
+
         return(
             <Search
                 loading={isLoading}
@@ -74,7 +74,6 @@ class SearchBar extends Component{
                 })}
                 results={results}
                 value={value}
-                {...this.props}
             />
         )
     }

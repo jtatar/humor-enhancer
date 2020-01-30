@@ -22,7 +22,7 @@ class Signin extends Component {
     }
 
     onSubmitSignIn = () => {
-        fetch('https://tai-polsl-api.herokuapp.com/signin',{
+        fetch('http://localhost:3000/signin',{
             method:'post',
             headers:{
                 'Content-Type': 'application/json'
@@ -36,7 +36,7 @@ class Signin extends Component {
             .then(data => {
                 if(data.userId && data.success === 'true'){
                     this.saveAuthTokenInSession(data.token);
-                    fetch(`https://tai-polsl-api.herokuapp.com/profile/${data.userId}`, {
+                    fetch(`http://localhost:3000/profile/${data.userId}`, {
                         method:'get',
                         headers: {
                             'Content-Type': 'application/json',
