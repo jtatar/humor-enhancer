@@ -139,7 +139,7 @@ class Register extends Component {
                                 <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
                                 <input
                                 onChange = {this.onPasswordChange}
-                                className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 mb2"
+                                className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                                 type="password"
                                 name="password"
                                 id="password"
@@ -150,12 +150,11 @@ class Register extends Component {
                         sitekey="6Leq79YUAAAAADuj-tFkC7-ZOUyRF08ZmZKffYG9"
                         render="explicit"
                         verifyCallback={this.verifyCallback}
-                        onloadCallback={this.callback}
                         />
                         <div className="">
                             <input
                                 onClick = {this.onSubmitRegister}
-                                className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+                                className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib mt2"
                                 type="submit"
                                 value="Register"
                             />

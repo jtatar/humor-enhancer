@@ -93,7 +93,7 @@ class Signin extends Component {
                         <div className="mv3">
                             <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
                             <input
-                            className="hover-black b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 mb2"
+                            className="hover-black b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                             type="password"
                             name="password"
                             id="password"
@@ -105,12 +105,11 @@ class Signin extends Component {
                         sitekey="6Leq79YUAAAAADuj-tFkC7-ZOUyRF08ZmZKffYG9"
                         render="explicit"
                         verifyCallback={this.verifyCallback}
-                        onloadCallback={this.callback}
                         />
                         <div className="">
                         <input
                             onClick={this.onSubmitSignIn}
-                            className="hover-black b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+                            className="hover-black b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib mt2"
                             type="submit"
                             value="Sign in"
                         />
