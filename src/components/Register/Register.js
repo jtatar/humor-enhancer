@@ -8,7 +8,8 @@ class Register extends Component {
             password: '',
             name: '',
             surname: '',
-            age: 0
+            age: 0,
+            isVerified:false
         }
     }
 
@@ -36,38 +37,54 @@ class Register extends Component {
         window.sessionStorage.setItem('token', token);
     }
 
-    onSubmitRegister = () => {
-        fetch('https://tai-polsl-api.herokuapp.com/register', {
-            method: 'post',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                name: this.state.name,
-                surname: this.state.surname,
-                age: this.state.age,
-                email: this.state.email,
-                password: this.state.password
+    verifyCallback = (response) => {
+        if(response){
+            this.setState({
+                isVerified: true
             })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data.userId && data.success === 'true') {
-                this.saveAuthTokenInSession(data.token);
-                fetch(`https://tai-polsl-api.herokuapp.com/profile/${data.userId}`,{
-                    method: 'get',
-                    headers:{
-                        'Content-Type': 'application/json',
-                        'Authorization': data.token
-                    }
+        }
+    }
+    
+    callback = () => {
+        console.log('loaded')
+    }
+
+    onSubmitRegister = () => {
+        if(this.state.isVerified){
+            fetch('https://tai-polsl-api.herokuapp.com/register', {
+                method: 'post',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    name: this.state.name,
+                    surname: this.state.surname,
+                    age: this.state.age,
+                    email: this.state.email,
+                    password: this.state.password
                 })
-                .then(response => response.json())
-                .then(user => {
-                    if(user && user.email){
-                        this.props.loadUser(user);
-                        this.props.onRouteChange('home');
-                    }
-                })
-            }
-        })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.userId && data.success === 'true') {
+                    this.saveAuthTokenInSession(data.token);
+                    fetch(`https://tai-polsl-api.herokuapp.com/profile/${data.userId}`,{
+                        method: 'get',
+                        headers:{
+                            'Content-Type': 'application/json',
+                            'Authorization': data.token
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(user => {
+                        if(user && user.email){
+                            this.props.loadUser(user);
+                            this.props.onRouteChange('home');
+                        }
+                    })
+                }
+            })
+        } else {
+            console.log('Verify your captcha')
+        }
     }
 
     render(){
@@ -136,6 +153,12 @@ class Register extends Component {
                                 value="Register"
                             />
                         </div>
+                        <Recaptcha
+                        sitekey="6Leq79YUAAAAADuj-tFkC7-ZOUyRF08ZmZKffYG9"
+                        render="explicit"
+                        verifyCallback={this.verifyCallback}
+                        onloadCallback={this.callback}
+                        />
                     </div>
                 </article>
             </main>
