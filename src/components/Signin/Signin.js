@@ -93,7 +93,7 @@ class Signin extends Component {
                         <div className="mv3">
                             <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
                             <input
-                            className="hover-black b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
+                            className="hover-black b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 mb2"
                             type="password"
                             name="password"
                             id="password"
