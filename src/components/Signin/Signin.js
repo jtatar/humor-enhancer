@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import Recaptcha from 'react-recaptcha';
 
 class Signin extends Component {
     constructor(props){
         super(props);
         this.state = {
             signInEmail: '',
-            signInPassword: ''
+            signInPassword: '',
+            isVerified:false
         }
     }
 
@@ -20,38 +22,54 @@ class Signin extends Component {
     saveAuthTokenInSession = (token) => {
         window.sessionStorage.setItem('token', token);
     }
+    
+    verifyCallback = (response) => {
+        if(response){
+            this.setState({
+                isVerified: true
+            })
+        }
+    }
+    
+    callback = () => {
+        console.log('loaded')
+    }
 
     onSubmitSignIn = () => {
-        fetch('https://tai-polsl-api.herokuapp.com/signin',{
-            method:'post',
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: this.state.signInEmail,
-                password: this.state.signInPassword
+        if(this.state.isVerified){
+            fetch('https://tai-polsl-api.herokuapp.com/signin',{
+                method:'post',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: this.state.signInEmail,
+                    password: this.state.signInPassword
+                })
             })
-        })
-            .then(response => response.json())
-            .then(data => {
-                if(data.userId && data.success === 'true'){
-                    this.saveAuthTokenInSession(data.token);
-                    fetch(`https://tai-polsl-api.herokuapp.com/profile/${data.userId}`, {
-                        method:'get',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': data.token
-                        }
-                    })
-                    .then(resp => resp.json())
-                    .then(user => {
-                        if(user && user.email){
-                            this.props.loadUser(user);
-                            this.props.onRouteChange('home');
-                        }
-                    })
-                }
-            })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.userId && data.success === 'true'){
+                        this.saveAuthTokenInSession(data.token);
+                        fetch(`https://tai-polsl-api.herokuapp.com/profile/${data.userId}`, {
+                            method:'get',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': data.token
+                            }
+                        })
+                        .then(resp => resp.json())
+                        .then(user => {
+                            if(user && user.email){
+                                this.props.loadUser(user);
+                                this.props.onRouteChange('home');
+                            }
+                        })
+                    }
+                })
+        } else {
+            console.log('Please verify the captcha')
+        }
     }
 
     render(){
@@ -83,6 +101,12 @@ class Signin extends Component {
                             />
                         </div>
                         </fieldset>
+                        <Recaptcha
+                        sitekey="6Leq79YUAAAAADuj-tFkC7-ZOUyRF08ZmZKffYG9"
+                        render="explicit"
+                        verifyCallback={this.verifyCallback}
+                        onloadCallback={this.callback}
+                        />
                         <div className="">
                         <input
                             onClick={this.onSubmitSignIn}

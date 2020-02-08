@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Recaptcha from 'react-recaptcha';
 
 class Register extends Component {
     constructor(props){
@@ -145,6 +146,12 @@ class Register extends Component {
                                 />
                             </div>
                         </fieldset>
+                        <Recaptcha
+                        sitekey="6Leq79YUAAAAADuj-tFkC7-ZOUyRF08ZmZKffYG9"
+                        render="explicit"
+                        verifyCallback={this.verifyCallback}
+                        onloadCallback={this.callback}
+                        />
                         <div className="">
                             <input
                                 onClick = {this.onSubmitRegister}
@@ -153,12 +160,6 @@ class Register extends Component {
                                 value="Register"
                             />
                         </div>
-                        <Recaptcha
-                        sitekey="6Leq79YUAAAAADuj-tFkC7-ZOUyRF08ZmZKffYG9"
-                        render="explicit"
-                        verifyCallback={this.verifyCallback}
-                        onloadCallback={this.callback}
-                        />
                     </div>
                 </article>
             </main>
